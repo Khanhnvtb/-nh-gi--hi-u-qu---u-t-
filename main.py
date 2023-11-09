@@ -2,16 +2,28 @@ from fuzzy import *
 import tkinter
 
 def calculate_fuzzy():
-    _profit = float(profitEntry.get())
-    _cost = float(costEntry.get())
-    _time = float(timeEntry.get())
+    try:
+        _profit = float(profitEntry.get())
+        _cost = float(costEntry.get())
+        _time = float(timeEntry.get())
 
-    my_fuzzy = Fuzzy(_profit, _cost, _time)
-    my_fuzzy.inference()
-    my_fuzzy.defuzzifier()
+        if isinstance(_profit, (float, int)) and isinstance(_cost, (float, int)) and isinstance(_time, (float, int)):
+            print(_profit, _cost, _time)
 
-    resultLabel.config(text=f"Hiệu quả đầu tư: {my_fuzzy}")
-    print(my_fuzzy)
+            my_fuzzy = Fuzzy(_profit, _cost, _time)
+            my_fuzzy.inference()
+            my_fuzzy.defuzzifier()
+
+            resultLabel.config(text=f"Hiệu quả đầu tư: {my_fuzzy}")
+            print(my_fuzzy)
+        else:
+            errorLabel.config(text="Một trong ba giá trị không phải là số")
+    except ValueError:
+        errorLabel.config(text="Đầu vào không hợp lệ. Vui lòng nhập thông tin hợp lệ")
+
+
+
+
 
 window = tkinter.Tk()
 window.title("Đánh giá hiệu quả đầu tư")
@@ -41,6 +53,9 @@ timeEntry.grid(row=1, column=2)
 
 resultLabel = tkinter.Label(frame)
 resultLabel.grid(row=1, column=0)
+
+errorLabel = tkinter.Label(frame)
+errorLabel.grid(row=2, column=0)
 
 button = tkinter.Button(frame, text="Enter", command=calculate_fuzzy)
 button.grid(row=3, column=0, sticky="news", padx=20, pady=20)
