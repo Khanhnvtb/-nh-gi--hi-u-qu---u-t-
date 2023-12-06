@@ -24,7 +24,7 @@ def calculate_fuzzy():
             resultLabel.config(text=f"Hiệu quả đầu tư: {my_fuzzy}")
             print(my_fuzzy)
         else:
-            errorLabel.config(text="Một trong ba giá trị không phải là số")
+            errorLabel.config(text="Dữ liệu nhập vào phải là số thực")
     else:
         errorLabel.config(text="Bạn cần phải nhập thông tin trước khi xem kết quả")
 

@@ -34,17 +34,14 @@ class Fuzzy_Role_Base:
         self.label = label
 
     def update_role_function(self, fuzzy):
-        for i in range(3):
-            for j in range(3):
-                for k in range(3):
-                    if fuzzy.μ_profit[i] and self.index_profit == i and fuzzy.μ_cost[j] and self.index_cost == j and fuzzy.μ_time[k] and self.index_time == k:
-                        value = min(fuzzy.μ_profit[i], fuzzy.μ_cost[j], fuzzy.μ_time[k])
-                        if self.label == 0:
-                            fuzzy.role_function.OHQ = max(fuzzy.role_function.OHQ, value)
-                        elif self.label == 1:
-                            fuzzy.role_function.KHQ = max(fuzzy.role_function.KHQ, value)
-                        else:
-                            fuzzy.role_function.HQ = max(fuzzy.role_function.HQ, value)
+        if fuzzy.μ_profit[self.index_profit] and fuzzy.μ_cost[self.index_cost] and fuzzy.μ_time[self.index_time]:
+            value = min(fuzzy.μ_profit[self.index_profit], fuzzy.μ_cost[self.index_cost], fuzzy.μ_time[self.index_time])
+            if self.label == 0:
+                fuzzy.role_function.OHQ = max(fuzzy.role_function.OHQ, value)
+            elif self.label == 1:
+                fuzzy.role_function.KHQ = max(fuzzy.role_function.KHQ, value)
+            else:
+                fuzzy.role_function.HQ = max(fuzzy.role_function.HQ, value)
 
 class Fuzzy:
     def __init__(self, profit, cost, time):
